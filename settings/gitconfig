@@ -1,0 +1,9 @@
+[core]
+	editor = vi
+[alias]
+	s=status
+	cm=commit
+	co=checkout
+	b=branch
+	last=log -1
+
