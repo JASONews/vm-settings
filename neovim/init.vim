@@ -29,7 +29,7 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
-colorscheme onedark
+colorscheme default
 set smartindent
 set tabstop=4
 set shiftwidth=4
