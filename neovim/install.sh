@@ -1,10 +1,10 @@
 #!/bin/bash 
 
-which git
-test -eq $? 0 || echo "Please install Git first" && return 1
+which git > /dev/null
+test -eq $? 0 || (echo "Please install Git first" && return 1)
 
-which nvim
-test -eq $? 0 || echo "please install neovim first" && return 2
+which nvim > /dev/null
+test -eq $? 0 || (echo "please install neovim first" && return 2)
 
 NVIMPATH=~/.config/nvim
 mkdir -p $NVIMPATH
