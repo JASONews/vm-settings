@@ -6,7 +6,7 @@ if test "$OSTYPE" = "linux-gnu"; then
 	sudo apt-get install neovim
 fi
 CDIR="$(pwd)"
-cd $CDIR/neovim && (. ./neovim/install.sh && echo "neovim done")
-cd $CDIR/tmux && (. ./tmux/install.sh && echo "tmux done")
-cd $CDIR/bash && (. ./bash/install.sh && echo "bash done")
+cd $CDIR/neovim && (. install.sh && echo "neovim done")
+cd $CDIR/tmux && (. install.sh && echo "tmux done")
+cd $CDIR/bash && (. install.sh && echo "bash done")
 cd $CDIR
