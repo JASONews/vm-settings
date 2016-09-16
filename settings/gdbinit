@@ -1,5 +1,0 @@
-add-auto-load-safe-path /home/student/cse306/xv6/.gdbinit
-add-auto-load-safe-path /home/student/cse306/hw2/xv6/.gdbinit
-add-auto-load-safe-path /home/student/cse306/hw2/xv6-1/.gdbinit
-add-auto-load-safe-path /home/student/cse306/hw3/hw-xinwwang/.gdbinit
-add-auto-load-safe-path /home/student/cse306/hw4/hw-xinwwang/.gdbinit

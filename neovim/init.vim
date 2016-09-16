@@ -1,20 +1,7 @@
-set nocompatible
-syntax on
-filetype plugin on
-filetype indent on
-
-set smartindent
-set tabstop=4
-set shiftwidth=4
-set number
-set bufhidden=hide
-set statusline=%f%m%r%h\ [%L]\ [%{&ff}]\ %y%=[%p%%]\ [line:%05l,col:%02v]
-set laststatus=2
-
 " ========= Vundle ===========
 " set the runtime path to include Vundle and initialize
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -22,22 +9,78 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'neocomplcache'
+Plugin "bling/vim-airline"
+Plugin "vim-airline/vim-airline-themes"
+Plugin 'ctrlp.vim'
+Bundle 'Townk/vim-autoclose.git'
+Bundle "jiangmiao/auto-pairs"
+Bundle "airblade/vim-gitgutter"
+Bundle "tpope/vim-fugitive"
+Bundle "scrooloose/nerdtree"
+Bundle "majutsushi/tagbar"
+Bundle 'scrooloose/syntastic.git'
+Bundle 'edkolev/tmuxline.vim'
 call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+
 " ========= Vundle end ==========
 
-" ========= neoComplete =========
+"-------------------------- gerneral settings -----------------------------
+set nocompatible
+syntax on
+filetype plugin indent on
+
+colorscheme onedark
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set number
+set bufhidden=hide
+
+set laststatus=2
+set statusline+=%f%m%r%h\ [%L]\ [%{&ff}]\ %y%=[%p%%]\ [line:%05l,col:%02v]
+
+set t_Co=256
+set t_AB=^[[48;5;%dm
+set t_AF=^[[38;5;%dm
+
+set list          
+set listchars=tab:•\ ,trail:•,extends:»,precedes:« 
+
+" Keep search matches in the middle of the window.
+nnoremap n nzzzv 
+nnoremap N Nzzzv
+
+
+"--------------- NERDTree -------------
+map <C-\> :NERDTreeToggle<CR>
+
+"--------------- airline --------------
+let g:airline_powerline_fonts = 1
+let g:airline_theme='wombat'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n'  : 'N',
+      \ 'i'  : 'I',
+      \ 'R'  : 'R',
+      \ 'c'  : 'C',
+      \ 'v'  : 'V',
+      \ 'V'  : 'V',
+      \ 's'  : 'S',
+      \ 'S'  : 'S',
+      \ }
+
+ let g:airline_skip_empty_sections = 1
+
+ if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+  endif
+
+let g:airline#extensions#virtualenv#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#hunks#non_zero_only= 1  
+
+"-------------  neoComplete ---------------
 
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -98,16 +141,7 @@ set smartindent
 set tabstop=4
 set omnifunc=syntaxcomplete#Complete
 
-"key mapping
-"-------------------------------------------
-"nmap <C-j> <Esc>
-"imap <C-j> <Esc>
-"vmap <C-j> <Esc>
-"map <C-j> <Esc>
-"extra configration
-"-------------------------------------------
 nmap <CR> o<Esc>
-" imap {<CR> {<CR><TAB><CR>}<Esc>ka
 imap [ []<Esc>i
 
 "hi Pmenu ctermfg=0 ctermbg=223
