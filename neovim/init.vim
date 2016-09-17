@@ -148,7 +148,12 @@ imap [ []<Esc>i
 hi PmenuSel ctermfg=255 ctermbg=75
 hi Pmenu ctermfg=253 ctermbg=68
 
+" light theme
 hi PmenuSel ctermfg=9 ctermbg=215
 hi Pmenu ctermfg=236 ctermbg=223
+
+" dark theme
+hi PmenuSel ctermfg=255 ctermbg=239
+hi Pmenu ctermfg=250 ctermbg=235
 
 set backspace=indent,eol,start
