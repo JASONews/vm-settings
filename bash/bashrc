@@ -89,10 +89,9 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias ..='cd ..'
-alias w2='cd ~/cse306/hw2/xv6/'
-alias w3='cd ~/cse306/hw3/hw-xinwwang/'
-alias w4='cd ~/cse306/hw4/hw-xinwwang'
-
+if which tmux > /dev/null; then
+alias tmux="tmux -2"
+fi
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
