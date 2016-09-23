@@ -32,12 +32,16 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
-colorscheme onedark
+silent! colorscheme onedark
+
 set smartindent
 set tabstop=4
 set shiftwidth=4
 set number
 set bufhidden=hide
+
+set omnifunc=syntaxcomplete#Complete
+set backspace=indent,eol,start
 
 set laststatus=2
 set statusline+=%f%m%r%h\ [%L]\ [%{&ff}]\ %y%=[%p%%]\ [line:%05l,col:%02v]
@@ -52,6 +56,21 @@ set listchars=tab:•\ ,trail:•,extends:»,precedes:«
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv 
 nnoremap N Nzzzv
+
+" Custom key map
+nmap <CR> o<Esc>
+imap [ []<Esc>i
+
+
+" Completion popup color theme
+
+" dark theme
+hi PmenuSel ctermfg=255 ctermbg=239
+hi Pmenu ctermfg=250 ctermbg=235
+
+" light theme
+"hi PmenuSel ctermfg=9 ctermbg=215
+"hi Pmenu ctermfg=236 ctermbg=223
 
 
 "--------------- NERDTree -------------
@@ -148,23 +167,3 @@ set completeopt-=preview
 "
 " ======== neocomplete end ========
 
-set smartindent
-set tabstop=4
-set omnifunc=syntaxcomplete#Complete
-
-nmap <CR> o<Esc>
-imap [ []<Esc>i
-
-"hi Pmenu ctermfg=0 ctermbg=223
-hi PmenuSel ctermfg=255 ctermbg=75
-hi Pmenu ctermfg=253 ctermbg=68
-
-" dark theme
-hi PmenuSel ctermfg=255 ctermbg=239
-hi Pmenu ctermfg=250 ctermbg=235
-
-" light theme
-"hi PmenuSel ctermfg=9 ctermbg=215
-"hi Pmenu ctermfg=236 ctermbg=223
-
-set backspace=indent,eol,start
