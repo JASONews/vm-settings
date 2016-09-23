@@ -9,8 +9,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'neocomplcache'
-Plugin "bling/vim-airline"
-Plugin "vim-airline/vim-airline-themes"
+Bundle "bling/vim-airline"
+Bundle "vim-airline/vim-airline-themes"
 Plugin 'ctrlp.vim'
 Bundle 'Townk/vim-autoclose.git'
 Bundle "jiangmiao/auto-pairs"
@@ -20,6 +20,9 @@ Bundle "scrooloose/nerdtree"
 Bundle "majutsushi/tagbar"
 Bundle 'scrooloose/syntastic.git'
 Bundle 'edkolev/tmuxline.vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'easytags.vim'
+Plugin 'xolox/vim-misc'
 call vundle#end()            " required
 
 " ========= Vundle end ==========
@@ -29,7 +32,7 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
-colorscheme default
+colorscheme onedark
 set smartindent
 set tabstop=4
 set shiftwidth=4
@@ -54,10 +57,17 @@ nnoremap N Nzzzv
 "--------------- NERDTree -------------
 map <C-\> :NERDTreeToggle<CR>
 
+"---------------- TagBar ---------------
+nmap <C-u> :TagbarToggle<CR>
+
+"--------------- EasyTags -------------
+let g:easytags_autorecurse = 1
+let g:easytags_async = 1
+
 "--------------- airline --------------
 let g:airline_powerline_fonts = 1
-let g:airline_theme='wombat'
-let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='hybrid'
+let g:airline#extensions#tabline#enabled = 0
 let g:airline_mode_map = {
       \ '__' : '-',
       \ 'n'  : 'N',
@@ -79,6 +89,7 @@ let g:airline_mode_map = {
 let g:airline#extensions#virtualenv#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#hunks#non_zero_only= 1  
+let g:airline#extensions#tmuxline#enabled = 0
 
 "-------------  neoComplete ---------------
 
@@ -148,12 +159,12 @@ imap [ []<Esc>i
 hi PmenuSel ctermfg=255 ctermbg=75
 hi Pmenu ctermfg=253 ctermbg=68
 
-" light theme
-hi PmenuSel ctermfg=9 ctermbg=215
-hi Pmenu ctermfg=236 ctermbg=223
-
 " dark theme
 hi PmenuSel ctermfg=255 ctermbg=239
 hi Pmenu ctermfg=250 ctermbg=235
+
+" light theme
+"hi PmenuSel ctermfg=9 ctermbg=215
+"hi Pmenu ctermfg=236 ctermbg=223
 
 set backspace=indent,eol,start
