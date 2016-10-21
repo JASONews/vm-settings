@@ -1,0 +1,102 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/72/3l9901bs5p54nlk_q4dl73cc0000gn/T/d-116915-44691-iedyf9/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/72/3l9901bs5p54nlk_q4dl73cc0000gn/T/d-116915-44691-iedyf9/package.tgz",
+        "spec": "/private/var/folders/72/3l9901bs5p54nlk_q4dl73cc0000gn/T/d-116915-44691-iedyf9/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/72/3l9901bs5p54nlk_q4dl73cc0000gn/T/apm-install-dir-116915-44691-195grle"
+    ]
+  ],
+  "_from": "../d-116915-44691-iedyf9/package.tgz",
+  "_id": "linter-bootlint@1.0.2",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/linter-bootlint",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/72/3l9901bs5p54nlk_q4dl73cc0000gn/T/d-116915-44691-iedyf9/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/72/3l9901bs5p54nlk_q4dl73cc0000gn/T/d-116915-44691-iedyf9/package.tgz",
+    "spec": "/private/var/folders/72/3l9901bs5p54nlk_q4dl73cc0000gn/T/d-116915-44691-iedyf9/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-116915-44691-iedyf9/package.tgz",
+  "_shasum": "a2ce232c97245af75dcc05f8b536b65742fa3a34",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/72/3l9901bs5p54nlk_q4dl73cc0000gn/T/d-116915-44691-iedyf9/package.tgz",
+  "_where": "/private/var/folders/72/3l9901bs5p54nlk_q4dl73cc0000gn/T/apm-install-dir-116915-44691-195grle",
+  "bugs": {
+    "url": "https://github.com/AtomLinter/linter-bootlint/issues"
+  },
+  "dependencies": {
+    "atom-linter": "^4.5.1",
+    "atom-package-deps": "^4.0.1",
+    "bootlint": "~0.14.2"
+  },
+  "description": "Lint Bootstrap HTML on the fly, using bootlint.",
+  "devDependencies": {
+    "babel-eslint": "^5.0.0",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^6.0.2"
+  },
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "eslintConfig": {
+    "rules": {
+      "comma-dangle": [
+        2,
+        "never"
+      ],
+      "no-console": 0
+    },
+    "extends": "airbnb/base",
+    "parser": "babel-eslint",
+    "globals": {
+      "atom": true
+    },
+    "env": {
+      "es6": true,
+      "node": true
+    }
+  },
+  "homepage": "https://github.com/AtomLinter/linter-bootlint#readme",
+  "keywords": [
+    "html",
+    "lint",
+    "linter",
+    "bootlint"
+  ],
+  "license": "MIT",
+  "main": "./lib/init",
+  "name": "linter-bootlint",
+  "optionalDependencies": {},
+  "package-deps": [
+    "linter"
+  ],
+  "providedServices": {
+    "linter": {
+      "versions": {
+        "1.0.0": "provideLinter"
+      }
+    }
+  },
+  "readme": "# linter-bootlint\n\nThis linter plugin for [Linter][linter] provides an interface to\n[bootlint](https://github.com/twbs/bootlint). It will be used with files that\nhave the HTML syntax.\n\n## Installation\n\nThe [Linter][linter] package will be installed for you to provide an interface\nto this package. If you are using an alternative debugging interface that\nsupports linter plugins simply disable [Linter][linter].\n\n### Plugin installation\n\n```ShellSession\n$ apm install linter-bootlint\n```\n\n[linter]: https://github.com/atom-community/linter \"Linter\"\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AtomLinter/linter-bootlint.git"
+  },
+  "version": "1.0.2"
+}

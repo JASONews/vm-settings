@@ -1,0 +1,117 @@
+'scopeName': 'source.seawolf'
+'fileTypes': [
+  'sw'
+]
+'name': 'Seawolf'
+'patterns': [
+  {
+    'include': '#string'
+  }
+  {
+    'include': '#single_quote_string'
+  }
+  {
+    'include': '#real'
+  }
+  {
+    'include': '#integer'
+  }
+  {
+    'include': '#control_keyword'
+  }
+  {
+    'include': '#arithmetic_operator'
+  }
+  {
+    'include': '#logical_operator'
+  }
+  {
+    'include': '#builtin_function'
+  }
+  {
+    'include': '#function_definition'
+  }
+  {
+    'include': '#function_call'
+  }
+  {
+    'include': '#variable'
+  }
+]
+'repository':
+  'string':
+    'name': 'string.seawolf'
+    'match': '\\"[^\\"]*\\"'
+  'single_quote_string':
+    'begin': '\''
+    'end': '\''
+    'name':'invalid.illegal.string.seawolf'
+  'real':
+    'name': 'constant.numeric.real.seawolf'
+    'match': '\\d*(\\d\\.|\\.\\d)\\d*'
+  'control_keyword':
+    'name': 'keyword.control.seawolf'
+    'match': 'if|else|while|break|continue|switch|case|return'
+  'integer':
+    'name': 'constant.numeric.integer.seawolf'
+    'match': '\\d+'
+  'arithmetic_operator':
+    'name': 'keyword.operator.arithmetic.seawolf'
+    'match': '\\+|\\-|\\*\\*|\\/|\\(|\\)|\\{|\\}'
+  'logical_operator':
+    'name': 'keyword.operator.logical.seawolf'
+    'match': 'and|or|not|\\!|\\&\\&|\\|\\|'
+  'builtin_function':
+    'name': 'support.function.builtin.seawolf'
+    'match': 'print'
+  'function_definition':
+    {
+      'begin': '^\\s*(?!((print)|(if)|(while)))(?=[(A-Za-z][A-Za-z0-9]*\\s*\\()(?=[^;]*\\{)'
+      'end': '(\\))\\s*(?=\\{)'
+      'endCaptures':
+        '1':
+          'name': 'punctuation.definition.parameters.end.seawolf'
+        '2':
+          'name': 'punctuation.section.function.begin.seawolf'
+      'name': 'meta.function.seawolf'
+      'patterns': [
+        {
+          'include': '#control_keyword'
+        }
+        {
+          'include': '#builtin_function'
+        }
+        {
+          'begin': '(?=[A-Za-z][A-Za-z0-9]*)'
+          'contentName': 'entity.name.function.seawolf'
+          'end': '(?![A-Za-z0-9])'
+        }
+        {
+          'begin': '(\\()'
+          'beginCaptures':
+            '1':
+              'name': 'punctuation.definition.parameters.begin.seawolf'
+          'contentName': 'meta.function.parameters.seawolf'
+          'end': '(?=\\)\\s*\\{)'
+          'patterns': [
+            {
+              'match': '\\b([a-zA-Z][a-zA-Z0-9]*)\\s*(?:(,)|(?=\\)))'
+              'captures':
+                '1':
+                  'name': 'variable.parameter.function.seawolf'
+                '2':
+                  'name': 'punctuation.separator.parameters.seawolf'
+
+            }
+          ]
+        }
+      ]
+    }
+  'function_call':
+    'match': '(\\b[A-Za-z][A-Za-z0-9]*)\\s*(?=\\()'
+    'captures':
+      '1':
+        'name': 'meta.function.seawolf'
+  'variable':
+    'name': 'variable.other.seawolf'
+    'match': '\\b[A-Za-z][A-Za-z0-9_]*\\b'

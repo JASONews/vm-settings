@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle expand-char",
+        "command": "expand-char:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "expand-char",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "expand-char:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+"*":
+  "autocomplete-go": {}
+  "autocomplete-plus":
+    fileBlacklist: [
+      ""
+    ]
+  "autocomplete-python": {}
+  core:
+    disabledPackages: [
+      "git-time-machine"
+      "activate-power-mode"
+      "script"
+      "file-icons"
+      "autocomplete-en-cn"
+      "markdown-toc"
+      "autocomplete-clang"
+      "linter-bootlint"
+      "atom-html-preview"
+    ]
+    packagesWithKeymapsDisabled: []
+    projectHome: "~/github/atom_dev"
+    restorePreviousWindowsOnStart: false
+    telemetryConsent: "no"
+    themes: [
+      "one-dark-ui"
+      "base16-tomorrow-dark-theme"
+    ]
+  editor:
+    invisibles: {}
+    showIndentGuide: true
+    softWrap: true
+  "exception-reporting":
+    userId: "6b059570-f391-776a-8e8e-35de009cf9da"
+  "markdown-themeable-pdf":
+    enableCustomFooter: false
+    enableCustomHeader: false
+    format: "Letter"
+    openPdfInAtomWorkspace: false
+  minimap: {}
+  "vim-mode": {}
+  welcome:
+    showOnStartup: false

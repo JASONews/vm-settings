@@ -1,0 +1,32 @@
+{
+  "name": "language-prolog",
+  "version": "0.10.0",
+  "description": "Prolog language support in Atom",
+  "engines": {
+    "atom": ">=0.50.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jakehp/language-prolog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jakehp/language-prolog/issues"
+  },
+  "readme": "# Prolog language support in Atom\n\nAdds syntax highlighting and snippets to Prolog files in Atom.\n\nOriginally [converted](http://atom.io/docs/latest/converting-a-text-mate-bundle)\nfrom the [prolog.tmbundle](https://github.com/textmate/prolog.tmbundle).\n\nContributions are greatly appreciated. Please fork this repository and open a\npull request to add snippets, make grammar tweaks, etc.\n\nContributors:\n[iSheeft](https://github.com/iSheeft), [Artymort](https://github.com/Artymort), [mndrix](https://github.com/mndrix), [danielchatfield](https://github.com/danielchatfield)\n",
+  "readmeFilename": "README.md",
+  "homepage": "https://github.com/Jakehp/language-prolog#readme",
+  "_id": "language-prolog@0.10.0",
+  "_shasum": "622d5a433bcd1467e2e48565f99b650b1127355d",
+  "_resolved": "file:../d-116326-16008-110g1cf/package.tgz",
+  "_from": "../d-116326-16008-110g1cf/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}
