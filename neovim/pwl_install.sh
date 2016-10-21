@@ -1,4 +1,4 @@
-if test -d fonts; then
+if test ! -d fonts; then
 	git clone https://github.com/powerline/fonts.git
 	cd fonts &&  . install.sh  && cd - && echo "powerline fonts done"
 	rm -rf fonts
