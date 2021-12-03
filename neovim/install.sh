@@ -17,6 +17,8 @@ install_clangd () {
     sudo apt install clangd
 }
 
+echo "Installing neovim..."
+install_neovim
 
 which git > /dev/null
 test $? -eq 0 || (echo "Please install Git first" && exit 1)
