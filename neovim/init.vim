@@ -64,6 +64,8 @@ set statusline+=%f%m%r%h\ [%L]\ [%{&ff}]\ %y%=[%p%%]\ [line:%05l,col:%02v]
 set cursorline 
 hi cursorline term=bold cterm=bold
 
+tnoremap <Esc> <C-\><C-n>
+
 set t_Co=256
 set t_AB=^[[48;5;%dm
 set t_AF=^[[38;5;%dm
