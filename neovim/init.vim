@@ -19,6 +19,7 @@ Bundle "scrooloose/nerdtree"
 Bundle "majutsushi/tagbar"
 Bundle 'edkolev/tmuxline.vim'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'rafi/awesome-vim-colorschemes'
 "Bundle 'scrooloose/syntastic.git'
 
 " nvim-cmp
@@ -44,6 +45,7 @@ syntax on
 filetype plugin indent on
 
 " silent! colorscheme onedark
+set background=dark
 colorscheme codedark
 
 set encoding=utf-8
@@ -59,16 +61,17 @@ set omnifunc=syntaxcomplete#Complete
 set backspace=indent,eol,start
 
 set laststatus=2
-set statusline+=%f%m%r%h\ [%L]\ [%{&ff}]\ %y%=[%p%%]\ [line:%05l,col:%02v]
+"set statusline+=%f%m%r%h\ [%L]\ [%{&ff}]\ %y%=[%p%%]\ [line:%05l,col:%02v]
 
 set cursorline 
 hi cursorline term=bold cterm=bold
 
+" Exit terminal mode
 tnoremap <Esc> <C-\><C-n>
 
-set t_Co=256
-set t_AB=^[[48;5;%dm
-set t_AF=^[[38;5;%dm
+"set t_Co=256
+"set t_AB=^[[48;5;%dm
+"set t_AF=^[[38;5;%dm
 
 set list          
 set listchars=tab:•\ ,trail:•,extends:»,precedes:« 
@@ -81,6 +84,10 @@ nnoremap N Nzzzv
 nmap <CR> o<Esc>
 imap [ []<Esc>i
 
+" Remember last edit position
+autocmd BufRead * autocmd FileType <buffer> ++once
+  \ if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif
+
 inoremap <C-C> <ESC>
 
 
@@ -89,6 +96,7 @@ inoremap <C-C> <ESC>
 " dark theme
 "hi PmenuSel ctermfg=255 ctermbg=239
 "hi Pmenu ctermfg=250 ctermbg=235
+
 "
 " light theme
 "hi PmenuSel ctermfg=9 ctermbg=215
@@ -103,7 +111,7 @@ let NERDTreeShowHidden=1
 nmap <C-u> :TagbarToggle<CR>
 
 "--------------- airline --------------
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 let g:airline_theme='wombat'
 let g:airline#extensions#tabline#enabled = 0
 let g:airline_mode_map = {
@@ -124,9 +132,9 @@ let g:airline_mode_map = {
     let g:airline_symbols = {}
   endif
 
-let g:airline#extensions#virtualenv#enabled = 0
+let g:airline#extensions#virtualenv#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#hunks#non_zero_only= 1  
+let g:airline#extensions#hunks#non_zero_only= 1
 let g:airline#extensions#tmuxline#enabled = 0
 
 "------------- nvim-cmp ----------------
@@ -203,22 +211,51 @@ lua <<EOF
   }
 EOF
 
-" gray
-highlight! CmpItemAbbrDeprecated ctermbg=NONE gui=strikethrough ctermfg=244
-" blue
-highlight! CmpItemAbbrMatch ctermbg=NONE ctermfg=74
-highlight! CmpItemAbbrMatchFuzzy ctermbg=NONE ctermfg=74
-" light blue
-highlight! CmpItemKindVariable ctermbg=NONE ctermfg=153
-highlight! CmpItemKindInterface ctermbg=NONE ctermfg=153
-highlight! CmpItemKindText ctermbg=NONE ctermfg=153
-" pink
-highlight! CmpItemKindFunction ctermbg=NONE ctermfg=175
-highlight! CmpItemKindMethod ctermbg=NONE ctermfg=175
-" front
-highlight! CmpItemKindKeyword ctermbg=NONE ctermfg=188
-highlight! CmpItemKindProperty ctermbg=NONE ctermfg=188
-highlight! CmpItemKindUnit ctermbg=NONE ctermfg=188
+if &background == 'light'
+    hi PmenuSel ctermbg=33 ctermfg=255
+    hi Pmenu ctermbg=7
+
+    highlight! CmpItemMenu ctermbg=NONE ctermfg=255
+    " gray
+    highlight! CmpItemAbbrDeprecated ctermbg=NONE gui=strikethrough ctermfg=244
+    " blue
+    highlight! CmpItemAbbrMatch ctermbg=NONE ctermfg=39 cterm=bold
+    highlight! CmpItemAbbrMatchFuzzy ctermbg=NONE ctermfg=39 cterm=bold
+    " dark blue
+    highlight! CmpItemKindVariable ctermbg=NONE ctermfg=8
+    highlight! CmpItemKindInterface ctermbg=NONE ctermfg=8
+    highlight! CmpItemKindText ctermbg=NONE ctermfg=8
+    " pink
+    highlight! CmpItemKindFunction ctermbg=NONE ctermfg=175
+    highlight! CmpItemKindMethod ctermbg=NONE ctermfg=175
+    " front
+    highlight! CmpItemKindKeyword ctermbg=NONE ctermfg=188
+    highlight! CmpItemKindProperty ctermbg=NONE ctermfg=188
+    highlight! CmpItemKindUnit ctermbg=NONE ctermfg=188
+else
+    hi PmenuSel ctermbg=33 ctermfg=255
+    "hi PmenuSel ctermfg=255 ctermbg=239
+    hi Pmenu ctermfg=250 ctermbg=235
+    "pink 
+    " gray
+    highlight! CmpItemAbbrDeprecated ctermbg=NONE gui=strikethrough ctermfg=244
+    " blue
+    highlight! CmpItemAbbrMatch ctermbg=NONE ctermfg=39 cterm=bold
+    highlight! CmpItemAbbrMatchFuzzy ctermbg=NONE ctermfg=39 cterm=bold
+    "highlight! CmpItemAbbrMatch ctermbg=NONE ctermfg=74
+    "highlight! CmpItemAbbrMatchFuzzy ctermbg=NONE ctermfg=74
+    " light blue
+    highlight! CmpItemKindVariable ctermbg=NONE ctermfg=153
+    highlight! CmpItemKindInterface ctermbg=NONE ctermfg=153
+    highlight! CmpItemKindText ctermbg=NONE ctermfg=153
+    " pink
+    highlight! CmpItemKindFunction ctermbg=NONE ctermfg=175
+    highlight! CmpItemKindMethod ctermbg=NONE ctermfg=175
+    " front
+    highlight! CmpItemKindKeyword ctermbg=NONE ctermfg=188
+    highlight! CmpItemKindProperty ctermbg=NONE ctermfg=188
+    highlight! CmpItemKindUnit ctermbg=NONE ctermfg=188
+endif
 
 " gray
 "highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
@@ -289,3 +326,4 @@ for _, lsp in ipairs(servers) do
   }
 end
 EOF
+
