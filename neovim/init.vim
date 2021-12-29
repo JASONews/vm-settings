@@ -1,52 +1,48 @@
-" ========= Vundle ===========
-"
-" set the runtime path to include Vundle and initialize
-filetype off
-set rtp+=~/.config/nvim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" --------- Vim-Plug -------------
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Bundle "bling/vim-airline"
-Bundle "vim-airline/vim-airline-themes"
-Plugin 'ctrlp.vim'
-Bundle 'Townk/vim-autoclose.git'
-Bundle "jiangmiao/auto-pairs"
-Bundle "airblade/vim-gitgutter"
-Bundle "scrooloose/nerdtree"
-Bundle "majutsushi/tagbar"
-Bundle 'edkolev/tmuxline.vim'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'rafi/awesome-vim-colorschemes'
-"Bundle 'scrooloose/syntastic.git'
+call plug#begin('~/.vim/extensions')
+
+Plug 'VundleVim/Vundle.vim'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'Townk/vim-autoclose'
+Plug 'jiangmiao/auto-pairs'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'edkolev/tmuxline.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'rmagatti/goto-preview'
+
+" telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'kyazdani42/nvim-web-devicons'
 
 " nvim-cmp
-Plugin 'neovim/nvim-lspconfig'
-Plugin 'hrsh7th/cmp-nvim-lsp'
-Plugin 'hrsh7th/cmp-buffer'
-Plugin 'hrsh7th/cmp-path'
-Plugin 'hrsh7th/cmp-cmdline'
-Plugin 'hrsh7th/nvim-cmp'
-Plugin 'onsails/lspkind-nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'onsails/lspkind-nvim'
 
 " For vsnip users.
-Plugin 'hrsh7th/cmp-vsnip'
-Plugin 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 
-call vundle#end()            " required
 
-" ========= Vundle end ==========
+call plug#end()
 
 "-------------------------- gerneral settings -----------------------------
 set nocompatible
 syntax on
 filetype plugin indent on
 
-" silent! colorscheme onedark
-set background=dark
-colorscheme codedark
+let &background=$TERM_BG_COLOR
 
 set encoding=utf-8
 
@@ -61,7 +57,6 @@ set omnifunc=syntaxcomplete#Complete
 set backspace=indent,eol,start
 
 set laststatus=2
-"set statusline+=%f%m%r%h\ [%L]\ [%{&ff}]\ %y%=[%p%%]\ [line:%05l,col:%02v]
 
 set cursorline 
 hi cursorline term=bold cterm=bold
@@ -73,7 +68,7 @@ tnoremap <Esc> <C-\><C-n>
 "set t_AB=^[[48;5;%dm
 "set t_AF=^[[38;5;%dm
 
-set list          
+set list
 set listchars=tab:•\ ,trail:•,extends:»,precedes:« 
 
 " Keep search matches in the middle of the window.
@@ -91,18 +86,6 @@ autocmd BufRead * autocmd FileType <buffer> ++once
 inoremap <C-C> <ESC>
 
 
-" Completion popup color theme
-
-" dark theme
-"hi PmenuSel ctermfg=255 ctermbg=239
-"hi Pmenu ctermfg=250 ctermbg=235
-
-"
-" light theme
-"hi PmenuSel ctermfg=9 ctermbg=215
-"hi Pmenu ctermfg=236 ctermbg=223
-
-
 "--------------- NERDTree -------------
 map <C-\> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
@@ -110,7 +93,7 @@ let NERDTreeShowHidden=1
 "---------------- TagBar ---------------
 nmap <C-u> :TagbarToggle<CR>
 
-"--------------- airline --------------
+"--------------- Airline --------------
 let g:airline_powerline_fonts = 1
 let g:airline_theme='wombat'
 let g:airline#extensions#tabline#enabled = 0
@@ -150,7 +133,7 @@ lua <<EOF
       format = lspkind.cmp_format({with_text = true, maxwidth = 50})
     },
 	experimental = {
-	  native_menu = false,
+	  native_menu = true,
 	},
     snippet = {
       -- REQUIRED - you must specify a snippet engine
@@ -212,6 +195,11 @@ lua <<EOF
 EOF
 
 if &background == 'light'
+
+    colorscheme Atelier_SavannaLight
+    let g:airline_theme='papercolor'
+
+    " floatin window color
     hi PmenuSel ctermbg=33 ctermfg=255
     hi Pmenu ctermbg=7
 
@@ -232,11 +220,17 @@ if &background == 'light'
     highlight! CmpItemKindKeyword ctermbg=NONE ctermfg=188
     highlight! CmpItemKindProperty ctermbg=NONE ctermfg=188
     highlight! CmpItemKindUnit ctermbg=NONE ctermfg=188
+
 else
+
+    colorscheme Atelier_SavannaDark
+    let g:airline_theme='wombat'
+
+    " floatin window color
     hi PmenuSel ctermbg=33 ctermfg=255
-    "hi PmenuSel ctermfg=255 ctermbg=239
     hi Pmenu ctermfg=250 ctermbg=235
-    "pink 
+
+    highlight! CmpItemMenu ctermbg=None ctermfg=None
     " gray
     highlight! CmpItemAbbrDeprecated ctermbg=NONE gui=strikethrough ctermfg=244
     " blue
@@ -310,7 +304,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
 end
 
@@ -325,5 +320,129 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+EOF
+
+"---------------- Modern Cpp hight --------------------
+" Enable highlighting of C++11 attributes
+"let g:cpp_attributes_highlight = 1
+"
+"" Highlight struct/class member variables (affects both C and C++ files)
+"let g:cpp_member_highlight = 1
+"
+"" Put all standard C and C++ keywords under Vim's highlight group 'Statement'
+"" (affects both C and C++ files)
+"let g:cpp_simple_highlight = 1
+
+
+
+"--------------- Enhanced Cpp highlight ---------------
+"let g:cpp_class_decl_highlight = 1
+"let g:cpp_member_variable_highlight = 1
+"let g:cpp_concepts_highlight = 1
+"let g:cpp_posix_standard = 1
+"let g:cpp_class_scope_highlight = 1
+"let g:cpp_experimental_template_highlight = 0
+"let g:cpp_experimental_simple_template_highlight = 0
+
+"--------------- Telescope ---------------------------
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+lua << EOF
+require('telescope').setup{
+  defaults = {
+    -- Default configurationfor telescope goes here:
+    -- config_key = value,
+    mappings = {
+        n = {
+        -- ["<C-p>"] = "builtin.find_files"
+      },
+      i = {
+        -- map actions.which_key to <C-h> (default: <C-/>)
+        -- actions.which_key shows the mappings for your picker,
+        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
+        -- ["<C-h>"] = "which_key"
+      }
+    }
+  },
+  pickers = {
+    -- Default configuration for builtin pickers goes here:
+    -- picker_name = {
+    --   picker_config_key = value,
+    --   ...
+    -- }
+    -- Now the picker_config_key will be applied every time you call this
+    -- builtin picker
+  },
+  extensions = {
+    -- Your extension configuration goes here:
+    -- extension_name = {
+    --   extension_config_key = value,
+    -- }
+    -- please take a look at the readme of the extension you want to configure
+  }
+}
+
+EOF
+
+
+
+"-------------- tree sitter -------------------------
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = "maintained",
+
+  -- Install languages synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- List of parsers to ignore installing
+  ignore_install = {},
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- list of language that will be disabled
+    disable = {},
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
+"----------------- GOTO-Preview ------------------------
+nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
+nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
+nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
+"" Only set if you have telescope installed
+nnoremap gpr <cmd>lua require('goto-preview').goto_preview_references()<CR>
+
+lua << EOF
+require('goto-preview').setup {
+  width = 120; -- Width of the floating window
+  height = 15; -- Height of the floating window
+  border = {"↖", "─" ,"┐", "│", "┘", "─", "└", "│"}; -- Border characters of the floating window
+  default_mappings = false; -- Bind default mappings
+  debug = false; -- Print debug information
+  opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
+  resizing_mappings = false; -- Binds arrow keys to resizing the floating window.
+  post_open_hook = nil; -- A function taking two arguments, a buffer and a window to be ran as a hook.
+  references = { -- Configure the telescope UI for slowing the references cycling window.
+    telescope = require('telescope.themes').get_dropdown({ hide_preview = false })
+  };
+  -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
+  focus_on_open = false; -- Focus the floating window when opening it.
+  dismiss_on_move = true; -- Dismiss the floating window when moving the cursor.
+  force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+  bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
+}
 EOF
 
