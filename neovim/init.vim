@@ -299,19 +299,18 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   buf_set_keymap('n', '=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'clangd' }
+local servers = { 'pyright', 'clangd', 'lua-ls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -320,29 +319,35 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+
+local sumneko_binary = "lua-language-server"
+require'lspconfig'.sumneko_lua.setup {
+    cmd = {sumneko_binary},
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+                -- Setup your lua path
+                path = vim.split(package.path, ';')
+                },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'}
+                },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = {[vim.fn.expand('$VIMRUNTIME/lua')] = true, [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true}
+                },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+            enable = false,
+            }
+        }
+    }
+}
+
 EOF
-
-"---------------- Modern Cpp hight --------------------
-" Enable highlighting of C++11 attributes
-"let g:cpp_attributes_highlight = 1
-"
-"" Highlight struct/class member variables (affects both C and C++ files)
-"let g:cpp_member_highlight = 1
-"
-"" Put all standard C and C++ keywords under Vim's highlight group 'Statement'
-"" (affects both C and C++ files)
-"let g:cpp_simple_highlight = 1
-
-
-
-"--------------- Enhanced Cpp highlight ---------------
-"let g:cpp_class_decl_highlight = 1
-"let g:cpp_member_variable_highlight = 1
-"let g:cpp_concepts_highlight = 1
-"let g:cpp_posix_standard = 1
-"let g:cpp_class_scope_highlight = 1
-"let g:cpp_experimental_template_highlight = 0
-"let g:cpp_experimental_simple_template_highlight = 0
 
 "--------------- Telescope ---------------------------
 " Find files using Telescope command-line sugar.
@@ -423,7 +428,7 @@ nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
 nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
 nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
 "" Only set if you have telescope installed
-nnoremap gpr <cmd>lua require('goto-preview').goto_preview_references()<CR>
+nnoremap gr <cmd>lua require('goto-preview').goto_preview_references()<CR>
 
 lua << EOF
 require('goto-preview').setup {
