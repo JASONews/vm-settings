@@ -2,7 +2,6 @@
 
 call plug#begin('~/.vim/extensions')
 
-"Plug 'VundleVim/Vundle.vim'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Townk/vim-autoclose'
@@ -18,6 +17,8 @@ Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 Plug 'junegunn/vim-easy-align'
 
 Plug 'JASONews/glow-hover'
+
+"Plug 'ctrlpvim/ctrlp.vim'
 
 " telescope
 Plug 'nvim-lua/plenary.nvim'
@@ -38,8 +39,11 @@ Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
+"Plug 'scalameta/nvim-metals'
+
 
 call plug#end()
+
 
 "-------------------------- gerneral settings -----------------------------
 set nocompatible
@@ -47,9 +51,7 @@ syntax on
 filetype plugin indent on
 
 let &background=$TERM_BG_COLOR
-
 set encoding=utf-8
-
 set smartindent
 set tabstop=2
 set shiftwidth=2
@@ -59,6 +61,7 @@ set expandtab
 
 set omnifunc=syntaxcomplete#Complete
 set backspace=indent,eol,start
+"set cinoptions=:0,l1,t0,g0,(0
 
 set laststatus=2
 
@@ -72,7 +75,7 @@ tnoremap <Esc> <C-\><C-n>
 "set t_AB=^[[48;5;%dm
 "set t_AF=^[[38;5;%dm
 
-set list
+set list          
 set listchars=tab:•\ ,trail:•,extends:»,precedes:« 
 
 " Keep search matches in the middle of the window.
@@ -89,6 +92,17 @@ autocmd BufRead * autocmd FileType <buffer> ++once
 
 inoremap <C-C> <ESC>
 
+" Completion popup color theme
+
+" dark theme
+"hi PmenuSel ctermfg=255 ctermbg=239
+"hi Pmenu ctermfg=250 ctermbg=235
+
+"
+" light theme
+"hi PmenuSel ctermfg=9 ctermbg=215
+"hi Pmenu ctermfg=236 ctermbg=223
+
 
 "--------------- NERDTree -------------
 map <C-\> :NERDTreeToggle<CR>
@@ -97,7 +111,8 @@ let NERDTreeShowHidden=1
 "---------------- TagBar ---------------
 nmap <C-u> :TagbarToggle<CR>
 
-"--------------- Airline --------------
+"---------------- Ctrl-P ---------------
+"--------------- airline --------------
 let g:airline_powerline_fonts = 1
 let g:airline_theme='wombat'
 let g:airline#extensions#tabline#enabled = 0
@@ -137,7 +152,7 @@ lua <<EOF
       format = lspkind.cmp_format({with_text = true, maxwidth = 50})
     },
 	experimental = {
-	  native_menu = true,
+	  native_menu = false,
 	},
     snippet = {
       -- REQUIRED - you must specify a snippet engine
@@ -187,15 +202,6 @@ lua <<EOF
     })
   })
 
---  -- Setup lspconfig.
---  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
---  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
---  require('lspconfig')['clangd'].setup {
---    capabilities = capabilities
---  }
---  require('lspconfig')['pyright'].setup {
---    capabilities = capabilities
---  }
 EOF
 
 if &background == 'light'
@@ -203,7 +209,6 @@ if &background == 'light'
     colorscheme Atelier_SavannaLight
     let g:airline_theme='papercolor'
 
-    " floatin window color
     hi PmenuSel ctermbg=33 ctermfg=255
     hi Pmenu ctermbg=7
 
@@ -227,14 +232,15 @@ if &background == 'light'
 
 else
 
-    colorscheme Atelier_SavannaDark
+    "colorscheme one-dark
     let g:airline_theme='wombat'
 
-    " floatin window color
-    hi PmenuSel ctermbg=33 ctermfg=255
-    hi Pmenu ctermfg=250 ctermbg=235
+    "hi! HoverFloatBorder ctermbg=black ctermfg=green
 
-    highlight! CmpItemMenu ctermbg=None ctermfg=None
+    hi PmenuSel ctermbg=33 ctermfg=255
+    "hi PmenuSel ctermfg=255 ctermbg=239
+    hi Pmenu ctermfg=250 ctermbg=235
+    "pink 
     " gray
     highlight! CmpItemAbbrDeprecated ctermbg=NONE gui=strikethrough ctermfg=244
     " blue
@@ -253,25 +259,8 @@ else
     highlight! CmpItemKindKeyword ctermbg=NONE ctermfg=188
     highlight! CmpItemKindProperty ctermbg=NONE ctermfg=188
     highlight! CmpItemKindUnit ctermbg=NONE ctermfg=188
+    colorscheme Atelier_SavannaDark
 endif
-
-" gray
-"highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
-"" blue
-"highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
-"highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
-"" light blue
-"highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
-"highlight! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
-"highlight! CmpItemKindText guibg=NONE guifg=#9CDCFE
-"" pink
-"highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
-"highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0
-"" front
-"highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
-"highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
-"highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
-"
 
 
 " ---------------------- LSP setup ----------------------
@@ -287,6 +276,7 @@ local on_attach = function(client, bufnr)
 
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
@@ -306,21 +296,30 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   buf_set_keymap('n', '=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
 end
 
+-- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+-- require('lspconfig')['clangd'].setup {
+--     capabilities = capabilities
+-- }
+-- require('lspconfig')['pyright'].setup {
+--     capabilities = capabilities
+-- }
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'clangd', 'lua-ls' }
+local servers = { 'pyright', 'clangd', 'erlangls', 'metals' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -333,7 +332,9 @@ end
 
 local sumneko_binary = "lua-language-server"
 require'lspconfig'.sumneko_lua.setup {
+    on_attach = on_attach,
     cmd = {sumneko_binary},
+    capabilities = capabilities,
     settings = {
         Lua = {
             runtime = {
@@ -341,18 +342,14 @@ require'lspconfig'.sumneko_lua.setup {
                 version = 'LuaJIT',
                 -- Setup your lua path
                 path = vim.split(package.path, ';')
-                },
+            },
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
                 globals = {'vim'}
-                },
+            },
             workspace = {
                 -- Make the server aware of Neovim runtime files
                 library = {[vim.fn.expand('$VIMRUNTIME/lua')] = true, [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true}
-                },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-            enable = false,
             }
         }
     }
@@ -400,6 +397,9 @@ require('telescope').setup{
     }
   },
   pickers = {
+      find_files = {
+          theme = "dropdown",
+          }
     -- Default configuration for builtin pickers goes here:
     -- picker_name = {
     --   picker_config_key = value,
@@ -450,7 +450,7 @@ require'nvim-treesitter.configs'.setup {
 EOF
 
 "----------------- GOTO-Preview ------------------------
-nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
+noremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
 nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
 nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
 "" Only set if you have telescope installed
@@ -470,14 +470,13 @@ require('goto-preview').setup {
     telescope = require('telescope.themes').get_dropdown({ hide_preview = false })
   };
   -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
-  focus_on_open = false; -- Focus the floating window when opening it.
-  dismiss_on_move = true; -- Dismiss the floating window when moving the cursor.
+  focus_on_open = true; -- Focus the floating window when opening it.
+  dismiss_on_move = false; -- Dismiss the floating window when moving the cursor.
   force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
   bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
 }
 EOF
 
-" -------------- glow-hover --------------------------
 lua << EOF
 require('glow-hover').setup{
     border = 'rounded'
@@ -489,3 +488,28 @@ EOF
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+"lua << EOF
+
+
+"
+"metals_config = require("metals").bare_config()
+"-- Example of settings
+"metals_config.settings = {
+"  showImplicitArguments = true,
+"  excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+"--  serverVersion = "0.10.9+133-9aae968a-SNAPSHOT",
+"}
+"
+"local capabilities = vim.lsp.protocol.make_client_capabilities()
+"metals_config.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+"
+"vim.cmd([[augroup lsp]])
+"vim.cmd([[autocmd!]])
+"-- cmd([[autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
+"-- NOTE: You may or may not want java included here. You will need it if you want basic Java support
+"-- but it may also conflict if you are using something like nvim-jdtls which also works on a java filetype
+"-- autocmd.
+"vim.cmd([[autocmd FileType java,scala,sbt lua require("metals").initialize_or_attach(metals_config)]])
+"vim.cmd([[augroup end]])
+"EOF
