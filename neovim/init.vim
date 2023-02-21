@@ -38,6 +38,9 @@ Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
+" For perf measurement
+Plug 'dstein64/vim-startuptime'
+
 
 call plug#end()
 
@@ -136,9 +139,6 @@ lua <<EOF
     formatting = {
       format = lspkind.cmp_format({with_text = true, maxwidth = 50})
     },
-	experimental = {
-	  native_menu = true,
-	},
     snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
@@ -316,11 +316,11 @@ local on_attach = function(client, bufnr)
 
 end
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'clangd', 'lua-ls' }
+local servers = {'clangd'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -331,32 +331,32 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-local sumneko_binary = "lua-language-server"
-require'lspconfig'.sumneko_lua.setup {
-    cmd = {sumneko_binary},
-    settings = {
-        Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-                -- Setup your lua path
-                path = vim.split(package.path, ';')
-                },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = {'vim'}
-                },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = {[vim.fn.expand('$VIMRUNTIME/lua')] = true, [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true}
-                },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-            enable = false,
-            }
-        }
-    }
-}
+--local sumneko_binary = "lua-language-server"
+--require'lspconfig'.sumneko_lua.setup {
+--    cmd = {sumneko_binary},
+--    settings = {
+--        Lua = {
+--            runtime = {
+--                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+--                version = 'LuaJIT',
+--                -- Setup your lua path
+--                path = vim.split(package.path, ';')
+--                },
+--            diagnostics = {
+--                -- Get the language server to recognize the `vim` global
+--                globals = {'vim'}
+--                },
+--            workspace = {
+--                -- Make the server aware of Neovim runtime files
+--                library = {[vim.fn.expand('$VIMRUNTIME/lua')] = true, [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true}
+--                },
+--            -- Do not send telemetry data containing a randomized but unique identifier
+--            telemetry = {
+--            enable = false,
+--            }
+--        }
+--    }
+--}
 
 require'lspconfig'.cmake.setup {
     on_attach = on_attach,
@@ -425,7 +425,7 @@ EOF
 lua << EOF
 require'nvim-treesitter.configs'.setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = "maintained",
+  ensure_installed = "all",
 
   -- Install languages synchronously (only applied to `ensure_installed`)
   sync_install = false,

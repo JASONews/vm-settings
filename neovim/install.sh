@@ -15,12 +15,12 @@ install_neovim () {
 install_clangd () {
     set -e
     sudo apt update
-    sudo apt install clangd
+    sudo apt install -y clangd
     set +e
 }
 
 echo "Installing neovim..."
-install_neovim
+#install_neovim
 
 ( install_clangd ) || echo "[Optional] Failed at installing Clangd. You may need to install it manually"
 
